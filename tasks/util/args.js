@@ -21,7 +21,7 @@ const args = yargs
     })
 
     .option('sourcemaps',{
-        describe:'force the creation of sourcemaps'
+        describe:'force the creation of sroucemaps'
     })
 
     .option('port',{
@@ -32,3 +32,4 @@ const args = yargs
 
     .argv
 
+export default args;
