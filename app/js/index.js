@@ -1,4 +1,4 @@
-import './class/lesson1';
+import './class/lesson2';
 class Test{
     constructor(){
         this.a='hello world!!!!';
