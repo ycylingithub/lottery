@@ -9607,116 +9607,55 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
-var _templateObject = _taggedTemplateLiteral(['i am ', ',', ''], ['i am ', ',', '']),
-    _templateObject2 = _taggedTemplateLiteral(['Hi\n', ''], ['Hi\\n', '']);
-
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
+//2 进制 和 8 进制
 {
-    console.log('a', 'a');
-    console.log('s', '\u20BB7');
-
-    console.log('s', '\uD842\uDFB7');
+    console.log('B', 503);
+    console.log(503);
 }
 
+//是否有尽
 {
-    //ES5中的处理
-    var s = '𠮷';
-    console.log('length', s.length);
-    console.log('0', s.charAt(0));
-    console.log('1', s.charAt(1));
-    console.log('at0', s.charCodeAt(0));
-    console.log('at1', s.charCodeAt(1));
-
-    //ES6 中的处理
-    var s1 = '𠮷a';
-    console.log('length', s1.length);
-    console.log('code0', s1.codePointAt(0));
-    console.log('code0', s1.codePointAt(0).toString(16));
-    console.log('code1', s1.codePointAt(1));
-    console.log('code2', s1.codePointAt(2));
+    console.log('15', Number.isFinite(15));
+    console.log('NaN', Number.isFinite(NaN));
+    console.log('1/0', Number.isFinite('true' / 0));
+    console.log('NaN', Number.isNaN(NaN));
+    console.log('0', Number.isNaN(0));
 }
 
+//是否整数
 {
-    //ES5 不能处理大于两个字节的字符
-    console.log(String.fromCharCode("0x20bb7"));
-    //ES6 可以处理
-    console.log(String.fromCodePoint("0x20bb7"));
+    console.log('25', Number.isInteger(25));
+    console.log('25.0', Number.isInteger(25.0));
+    console.log('25.1', Number.isInteger(25.1));
+    console.log('25字符串', Number.isInteger('25'));
 }
 
+//是否在正负2 的 23 次方之间
 {
-    var str = '\uD842\uDFB7abc';
-    //ES5 中遍历
-    for (var i = 0; i < str.length; i++) {
-        console.log('es5', str[i]);
-    }
-    //ES6 中遍历
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-        for (var _iterator = str[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var code = _step.value;
-
-            console.log('es6', code);
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
-    }
+    console.log(Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER);
+    console.log('10', Number.isSafeInteger(10));
+    console.log('a', Number.isSafeInteger('a'));
 }
 
+//取整，不分上下
 {
-    var _str = "string";
-    console.log('includes', _str.includes("c"));
-    console.log('start', _str.startsWith('str'));
-    console.log('end', _str.endsWith('ng'));
+    console.log(4.1, Math.trunc(4.1));
+    console.log(4.9, Math.trunc(4.9));
 }
 
+//正负或0
 {
-    var _str2 = "abc";
-    console.log(_str2.repeat(2));
+    console.log('-5', Math.sign(-5));
+    console.log('0', Math.sign(0));
+    console.log('5', Math.sign(5));
+    console.log('50', Math.sign('50'));
+    console.log('foo', Math.sign('foo'));
 }
 
+//立方根
 {
-    var name = "list";
-    var info = "hello world";
-    var m = 'i am ' + name + ',' + info;
-    console.log(m);
-}
-
-{
-    console.log('1'.padStart(2, '0'));
-    console.log('1'.padEnd(2, '0'));
-}
-
-{
-    var abc = function abc(s, v1, v2) {
-        console.log(s, v1, v2);
-        return s + v1 + v2;
-    };
-
-    var user = {
-        name: 'list',
-        info: 'hello world'
-    };
-    console.log(abc(_templateObject, user.name, user.info));
-}
-
-{
-    console.log(String.raw(_templateObject2, 1 + 2));
-    console.log('Hi\n' + (1 + 2));
+    console.log('-1', Math.cbrt(-1));
+    console.log('8', Math.cbrt(8));
 }
 
 /***/ })
