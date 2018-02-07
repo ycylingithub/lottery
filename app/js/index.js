@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import './class/lesson8';
+import './class/lesson9';
 class Test{
     constructor(){
         this.a='hello world!!!!';
