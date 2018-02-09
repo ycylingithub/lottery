@@ -93,3 +93,56 @@
     weakmap.set(o,123);
     console.log(weakmap.get(o));
 }
+
+{
+    //数据结构横向对比，增删改查
+    let map = new Map();
+    let array=[];
+    //增
+    map.set('t',1);
+    array.push({t:1});
+    console.info('map-array',map,array);
+
+    //查
+    let map_exist=map.has('t');
+    let array_exist = array.find(item=>item.t);
+    console.info('map-array',map_exist,array_exist);
+
+    //改
+    map.set('t',2);
+    array.forEach(item=>item.t?item.t=2:'');
+    console.info('map-array',map,array);
+
+    //删
+    map.delete('t');
+    let index = array.findIndex(item=>item.t);
+    array.splice(index,1);
+    console.info('map-array-empty',map,array);
+}
+
+{
+    //set和array对比
+    let set = new Set();
+    let array = [];
+
+    //增
+    set.add({t:1});
+    array.push({t:1});
+    console.info('set-array',set,array);
+
+    //查
+    let set_exist = set.has('t');
+    let array_exist = array.find(item=>item.t);
+    console.info('set-array',set,array);
+
+    //改
+    set.forEach(item=>item.t?item.t=2:'');
+    array.forEach(item=>item.t?item.t=2:'');
+    console.info('set-array',set,array);
+
+    //删
+    set.forEach(item=>item.t?set.delete(item):'');
+    let index = array.findIndex(item=>item.t);
+    array.splice(index,1);
+    console.info('set-array-empty',set,array);
+}
