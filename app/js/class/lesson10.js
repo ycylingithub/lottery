@@ -146,3 +146,40 @@
     array.splice(index,1);
     console.info('set-array-empty',set,array);
 }
+
+{
+    //map,set,obj的对比
+    let item={t:1};
+    let map = new Map();
+    let set = new Set();
+    let obj = {};
+
+    //增
+    map.set('t',1);
+    set.add(item);
+    obj['t'] = 1;
+
+    console.info('map-set-obj',map,set,obj);
+
+    //查
+    console.info({
+        map_exist:map.has('t'),
+        set_exist: set.has('t'),
+        obj_exist:'t' in obj
+    });
+
+    //改
+    map.set('t',2);
+    item.t=2;
+    obj['t']=2;
+    console.info('map-set-obj',map,set,obj);
+
+    //删
+    map.delete('t');
+    set.delete(item);
+    delete obj['t'];
+    console.info('map-set-obj-empty',obj,map,set);
+}
+
+//总结
+//能使用map不使用数组和obj，要求唯一性的话，使用set

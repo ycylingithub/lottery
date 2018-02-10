@@ -9842,5 +9842,42 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
     console.info('set-array-empty', set, _array);
 }
 
+{
+    //map,set,obj的对比
+    var item = { t: 1 };
+    var _map3 = new Map();
+    var _set = new Set();
+    var obj = {};
+
+    //增
+    _map3.set('t', 1);
+    _set.add(item);
+    obj['t'] = 1;
+
+    console.info('map-set-obj', _map3, _set, obj);
+
+    //查
+    console.info({
+        map_exist: _map3.has('t'),
+        set_exist: _set.has('t'),
+        obj_exist: 't' in obj
+    });
+
+    //改
+    _map3.set('t', 2);
+    item.t = 2;
+    obj['t'] = 2;
+    console.info('map-set-obj', _map3, _set, obj);
+
+    //删
+    _map3.delete('t');
+    _set.delete(item);
+    delete obj['t'];
+    console.info('map-set-obj-empty', obj, _map3, _set);
+}
+
+//总结
+//能使用map不使用数组和obj，要求唯一性的话，使用set
+
 /***/ })
 /******/ ]);
