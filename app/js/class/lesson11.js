@@ -1,10 +1,12 @@
 {
+    //业务开发中的原始对象
     let obj={
         time:'2017-03-11',
         name:'net',
         _r:123
     };
 
+    //创建业务中的代理，将要代理的对象放在这个对象中，用户可以直接操作monitor对象
     let monitor=new Proxy(obj,{
         // 拦截对象属性的读取
         get(target,key){
