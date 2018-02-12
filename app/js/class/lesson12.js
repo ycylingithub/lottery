@@ -34,8 +34,9 @@
 
     class Child extends Parent{
         constructor(name='child'){
-            super(name);
-            this.type='child';
+            super(name);  //子类向父类传递自己的默认值，覆盖掉父类的默认值
+
+            this.type='child';         //子类自己有新的属性，要写在super()之后
         }
     }
 
@@ -49,7 +50,7 @@
             this.name=name;
         }
 
-        get longName(){
+        get longName(){                         //longName是属性，不是函数
             return 'mk'+this.name
         }
 

@@ -9607,135 +9607,164 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 {
-    //业务开发中的原始对象
-    var obj = {
-        time: '2017-03-11',
-        name: 'net',
-        _r: 123
-    };
+    // 基本定义和生成实例
+    var Parent = function Parent() {
+        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'mukewang';
 
-    //创建业务中的代理，将要代理的对象放在这个对象中，用户可以直接操作monitor对象
-    var monitor = new Proxy(obj, {
-        // 拦截对象属性的读取
-        get: function get(target, key) {
-            return target[key].replace('2017', '2018');
-        },
-
-        // 拦截对象设置属性
-        set: function set(target, key, value) {
-            if (key === 'name') {
-                return target[key] = value;
-            } else {
-                return target[key];
-            }
-        },
-
-        // 拦截key in object操作
-        //对用户只显示name属性
-        has: function has(target, key) {
-            if (key === 'name') {
-                return target[key];
-            } else {
-                return false;
-            }
-        },
-
-        // 拦截delete
-        //对delete代理，以_开头的属性可以删除，其他不可以
-        deleteProperty: function deleteProperty(target, key) {
-            if (key.indexOf('_') > -1) {
-                delete target[key];
-                return true;
-            } else {
-                return target[key];
-            }
-        },
-
-        // 拦截Object.keys,Object.getOwnPropertySymbols,Object.getOwnPropertyNames
-        ownKeys: function ownKeys(target) {
-            return Object.keys(target).filter(function (item) {
-                return item != 'time';
-            }); //过滤到time属性，如果是time属性则不返回
-        }
-    });
-
-    console.log('get', monitor.time);
-
-    monitor.time = '2018';
-    monitor.name = 'mukewang';
-    console.log('set', monitor.time, monitor);
-
-    console.log('has', 'name' in monitor, 'time' in monitor); //name属性是在拦截中被允许的，而其他的属性都为不可见
-
-    // delete monitor.time;
-    // console.log('delete',monitor);
-    //
-    // delete monitor._r;
-    // console.log('delete',monitor);
-    console.log('ownKeys', Object.keys(monitor));
-}
-
-//
-// {
-//     let obj={
-//         time:'2017-03-11',
-//         name:'net',
-//         _r:123
-//     };
-//
-//     console.log('Reflect get',Reflect.get(obj,'time'));
-//     Reflect.set(obj,'name','mukewang');
-//     console.log(obj);
-//     console.log('has',Reflect.has(obj,'name'));
-// }
-
-
-//代理的一个用法实例
-{
-    var validator = function validator(target, _validator) {
-        return new Proxy(target, {
-            _validator: _validator,
-            set: function set(target, key, value, proxy) {
-                if (target.hasOwnProperty(key)) {
-                    var va = this._validator[key];
-                    if (!!va(value)) {
-                        return Reflect.set(target, key, value, proxy);
-                    } else {
-                        throw Error('\u4E0D\u80FD\u8BBE\u7F6E' + key + '\u5230' + value);
-                    }
-                } else {
-                    throw Error(key + '\u4E0D\u5B58\u5728');
-                }
-            }
-        });
-    };
-
-    var personValidators = {
-        name: function name(val) {
-            return typeof val === 'string';
-        },
-        age: function age(val) {
-            return typeof val === 'number' && val > 18;
-        }
-    };
-
-    var Person = function Person(name, age) {
-        _classCallCheck(this, Person);
+        _classCallCheck(this, Parent);
 
         this.name = name;
-        this.age = age;
-        return validator(this, personValidators); //构造函数返回了一个proxy代理对象
     };
 
-    var person = new Person('lilei', 30);
+    var v_parent = new Parent('v');
+    console.log('构造函数和实例', v_parent);
+}
 
-    console.info(person);
-    // person.name = 48;            //有了代理之后，对对象的属性不可以随意的修改，通过代理中对set的限制，不可以随意修改
-    person.name = 'han mei mei';
-    console.info(person);
+{
+    // 继承
+    var _Parent = function _Parent() {
+        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'mukewang';
+
+        _classCallCheck(this, _Parent);
+
+        this.name = name;
+    };
+
+    var Child = function (_Parent2) {
+        _inherits(Child, _Parent2);
+
+        function Child() {
+            _classCallCheck(this, Child);
+
+            return _possibleConstructorReturn(this, (Child.__proto__ || Object.getPrototypeOf(Child)).apply(this, arguments));
+        }
+
+        return Child;
+    }(_Parent);
+
+    console.log('继承', new Child());
+}
+
+{
+    // 继承传递参数
+    var _Parent3 = function _Parent3() {
+        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'mukewang';
+
+        _classCallCheck(this, _Parent3);
+
+        this.name = name;
+    };
+
+    var _Child = function (_Parent4) {
+        _inherits(_Child, _Parent4);
+
+        function _Child() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'child';
+
+            _classCallCheck(this, _Child);
+
+            //子类向父类传递自己的默认值，覆盖掉父类的默认值
+
+            var _this2 = _possibleConstructorReturn(this, (_Child.__proto__ || Object.getPrototypeOf(_Child)).call(this, name));
+
+            _this2.type = 'child'; //子类自己有新的属性，要写在super()之后
+            return _this2;
+        }
+
+        return _Child;
+    }(_Parent3);
+
+    console.log('继承传递参数', new _Child('hello'));
+}
+
+{
+    // getter,setter
+    var _Parent5 = function () {
+        function _Parent5() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'mukewang';
+
+            _classCallCheck(this, _Parent5);
+
+            this.name = name;
+        }
+
+        _createClass(_Parent5, [{
+            key: 'longName',
+            get: function get() {
+                //longName是属性，不是函数
+                return 'mk' + this.name;
+            },
+            set: function set(value) {
+                this.name = value;
+            }
+        }]);
+
+        return _Parent5;
+    }();
+
+    var v = new _Parent5();
+    console.log('getter', v.longName);
+    v.longName = 'hello';
+    console.log('setter', v.longName);
+}
+
+{
+    // 静态方法
+    var _Parent6 = function () {
+        function _Parent6() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'mukewang';
+
+            _classCallCheck(this, _Parent6);
+
+            this.name = name;
+        }
+
+        _createClass(_Parent6, null, [{
+            key: 'tell',
+            value: function tell() {
+                console.log('tell');
+            }
+        }]);
+
+        return _Parent6;
+    }();
+
+    _Parent6.tell();
+}
+
+{
+    // 静态属性
+    var _Parent7 = function () {
+        function _Parent7() {
+            var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'mukewang';
+
+            _classCallCheck(this, _Parent7);
+
+            this.name = name;
+        }
+
+        _createClass(_Parent7, null, [{
+            key: 'tell',
+            value: function tell() {
+                console.log('tell');
+            }
+        }]);
+
+        return _Parent7;
+    }();
+
+    _Parent7.type = 'test';
+
+    console.log('静态属性', _Parent7.type);
 }
 
 /***/ })
