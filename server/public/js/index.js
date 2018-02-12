@@ -9607,6 +9607,8 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 {
     //业务开发中的原始对象
     var obj = {
@@ -9632,6 +9634,7 @@ module.exports = function (regExp, replace) {
         },
 
         // 拦截key in object操作
+        //对用户只显示name属性
         has: function has(target, key) {
             if (key === 'name') {
                 return target[key];
@@ -9641,6 +9644,7 @@ module.exports = function (regExp, replace) {
         },
 
         // 拦截delete
+        //对delete代理，以_开头的属性可以删除，其他不可以
         deleteProperty: function deleteProperty(target, key) {
             if (key.indexOf('_') > -1) {
                 delete target[key];
@@ -9654,7 +9658,7 @@ module.exports = function (regExp, replace) {
         ownKeys: function ownKeys(target) {
             return Object.keys(target).filter(function (item) {
                 return item != 'time';
-            });
+            }); //过滤到time属性，如果是time属性则不返回
         }
     });
 
@@ -9664,7 +9668,7 @@ module.exports = function (regExp, replace) {
     monitor.name = 'mukewang';
     console.log('set', monitor.time, monitor);
 
-    console.log('has', 'name' in monitor, 'time' in monitor);
+    console.log('has', 'name' in monitor, 'time' in monitor); //name属性是在拦截中被允许的，而其他的属性都为不可见
 
     // delete monitor.time;
     // console.log('delete',monitor);
@@ -9673,6 +9677,7 @@ module.exports = function (regExp, replace) {
     // console.log('delete',monitor);
     console.log('ownKeys', Object.keys(monitor));
 }
+
 //
 // {
 //     let obj={
@@ -9686,6 +9691,52 @@ module.exports = function (regExp, replace) {
 //     console.log(obj);
 //     console.log('has',Reflect.has(obj,'name'));
 // }
+
+
+//代理的一个用法实例
+{
+    var validator = function validator(target, _validator) {
+        return new Proxy(target, {
+            _validator: _validator,
+            set: function set(target, key, value, proxy) {
+                if (target.hasOwnProperty(key)) {
+                    var va = this._validator[key];
+                    if (!!va(value)) {
+                        return Reflect.set(target, key, value, proxy);
+                    } else {
+                        throw Error('\u4E0D\u80FD\u8BBE\u7F6E' + key + '\u5230' + value);
+                    }
+                } else {
+                    throw Error(key + '\u4E0D\u5B58\u5728');
+                }
+            }
+        });
+    };
+
+    var personValidators = {
+        name: function name(val) {
+            return typeof val === 'string';
+        },
+        age: function age(val) {
+            return typeof val === 'number' && val > 18;
+        }
+    };
+
+    var Person = function Person(name, age) {
+        _classCallCheck(this, Person);
+
+        this.name = name;
+        this.age = age;
+        return validator(this, personValidators); //构造函数返回了一个proxy代理对象
+    };
+
+    var person = new Person('lilei', 30);
+
+    console.info(person);
+    // person.name = 48;            //有了代理之后，对对象的属性不可以随意的修改，通过代理中对set的限制，不可以随意修改
+    person.name = 'han mei mei';
+    console.info(person);
+}
 
 /***/ })
 /******/ ]);
