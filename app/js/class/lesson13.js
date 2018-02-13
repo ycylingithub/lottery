@@ -36,6 +36,7 @@
         })
     };
 
+    //通过ajax().then()返回一个Promise实例的方式可以一直对这个操作进行串联
     ajax()
         .then(function(){
             return new Promise(function(resolve,reject){
@@ -48,6 +49,7 @@
             console.log('timeout3');
         })
 }
+
 
 {
     let ajax=function(num){

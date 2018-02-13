@@ -9634,54 +9634,53 @@ module.exports = function (regExp, replace) {
         console.log('promise', 'timeout2');
     });
 }
-//
-// {
-//     let ajax=function(){
-//         console.log('执行3');
-//         return new Promise(function(resolve,reject){
-//             setTimeout(function () {
-//                 resolve()
-//             }, 1000);
-//         })
-//     };
-//
-//     ajax()
-//         .then(function(){
-//             return new Promise(function(resolve,reject){
-//                 setTimeout(function () {
-//                     resolve()
-//                 }, 2000);
-//             });
-//         })
-//         .then(function(){
-//             console.log('timeout3');
-//         })
-// }
-//
-// {
-//     let ajax=function(num){
-//         console.log('执行4');
-//         return new Promise(function(resolve,reject){
-//             if(num>5){
-//                 resolve()
-//             }else{
-//                 throw new Error('出错了')
-//             }
-//         })
-//     }
-//
-//     ajax(6).then(function(){
-//         console.log('log',6);
-//     }).catch(function(err){
-//         console.log('catch',err);
-//     });
-//
-//     ajax(3).then(function(){
-//         console.log('log',3);
-//     }).catch(function(err){
-//         console.log('catch',err);
-//     });
-// }
+
+{
+    var _ajax2 = function _ajax2() {
+        console.log('执行3');
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve();
+            }, 1000);
+        });
+    };
+
+    //通过ajax().then()返回一个Promise实例的方式可以一直对这个操作进行串联
+    _ajax2().then(function () {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve();
+            }, 2000);
+        });
+    }).then(function () {
+        console.log('timeout3');
+    });
+}
+
+{
+    var _ajax3 = function _ajax3(num) {
+        console.log('执行4');
+        return new Promise(function (resolve, reject) {
+            if (num > 5) {
+                resolve();
+            } else {
+                throw new Error('出错了');
+            }
+        });
+    };
+
+    _ajax3(6).then(function () {
+        console.log('log', 6);
+    }).catch(function (err) {
+        console.log('catch', err);
+    });
+
+    _ajax3(3).then(function () {
+        console.log('log', 3);
+    }).catch(function (err) {
+        console.log('catch', err);
+    });
+}
 
 /***/ })
 /******/ ]);
