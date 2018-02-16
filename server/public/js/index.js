@@ -9607,96 +9607,129 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-{
-    var arr = ['hello', 'world'];
-    var map = arr[Symbol.iterator]();
-    console.log(map.next());
-    console.log(map.next());
-    console.log(map.next());
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-//自定义Iterator接口
-{
-    var obj = _defineProperty({
-        start: [1, 3, 2],
-        end: [7, 9, 8]
-    }, Symbol.iterator, function () {
-        var self = this;
-        var index = 0;
-        var arr = self.start.concat(self.end);
-        var len = arr.length;
-
-        //返回一个对象，对象中应该包含next()方法
-        return {
-            next: function next() {
-                if (index < len) {
-                    return {
-                        value: arr[index++],
-                        done: false
-                    };
-                } else {
-                    return {
-                        value: arr[index++],
-                        done: true
-                    };
-                }
-            }
-        };
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+    var desc = {};
+    Object['ke' + 'ys'](descriptor).forEach(function (key) {
+        desc[key] = descriptor[key];
     });
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+    desc.enumerable = !!desc.enumerable;
+    desc.configurable = !!desc.configurable;
 
-    try {
-        for (var _iterator = obj[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var key = _step.value;
-
-            console.log(key);
-        }
-    } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-            }
-        } finally {
-            if (_didIteratorError) {
-                throw _iteratorError;
-            }
-        }
+    if ('value' in desc || desc.initializer) {
+        desc.writable = true;
     }
+
+    desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+        return decorator(target, property, desc) || desc;
+    }, desc);
+
+    if (context && desc.initializer !== void 0) {
+        desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+        desc.initializer = undefined;
+    }
+
+    if (desc.initializer === void 0) {
+        Object['define' + 'Property'](target, property, desc);
+        desc = null;
+    }
+
+    return desc;
+}
+
+//修饰器的作用
+{
+    var _desc, _value, _class;
+
+    var readonly = function readonly(target, name, descriptor) {
+        descriptor.writable = false;
+        return descriptor;
+    };
+
+    var Test = (_class = function () {
+        function Test() {
+            _classCallCheck(this, Test);
+        }
+
+        _createClass(Test, [{
+            key: 'time',
+            value: function time() {
+                return '2017-03-11';
+            }
+        }]);
+
+        return Test;
+    }(), (_applyDecoratedDescriptor(_class.prototype, 'time', [readonly], Object.getOwnPropertyDescriptor(_class.prototype, 'time'), _class.prototype)), _class);
+
+
+    var test = new Test();
+
+    // test.time=function(){
+    //   console.log('reset time');
+    // };
+
+    console.log(test.time());
 }
 
 {
-    var _arr = ['hello', 'world'];
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
+    var _class2;
 
-    try {
-        for (var _iterator2 = _arr[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var value = _step2.value;
+    var typename = function typename(target, name, descriptor) {
+        target.myname = 'hello';
+    };
 
-            console.log('value', value);
+    var _Test = typename(_class2 = function _Test() {
+        _classCallCheck(this, _Test);
+    }) || _class2;
+
+    console.log('类修饰符', _Test.myname);
+    // 第三方库修饰器的js库：core-decorators; npm install core-decorators
+}
+
+{
+    var _dec, _dec2, _desc2, _value2, _class3;
+
+    var log = function log(type) {
+        return function (target, name, descriptor) {
+            var src_method = descriptor.value;
+            descriptor.value = function () {
+                for (var _len = arguments.length, arg = Array(_len), _key = 0; _key < _len; _key++) {
+                    arg[_key] = arguments[_key];
+                }
+
+                src_method.apply(target, arg);
+                console.info('log ' + type);
+            };
+        };
+    };
+
+    var AD = (_dec = log('show'), _dec2 = log('click'), (_class3 = function () {
+        function AD() {
+            _classCallCheck(this, AD);
         }
-    } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-    } finally {
-        try {
-            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                _iterator2.return();
+
+        _createClass(AD, [{
+            key: 'show',
+            value: function show() {
+                console.info('ad is show');
             }
-        } finally {
-            if (_didIteratorError2) {
-                throw _iteratorError2;
+        }, {
+            key: 'click',
+            value: function click() {
+                console.info('ad is click');
             }
-        }
-    }
+        }]);
+
+        return AD;
+    }(), (_applyDecoratedDescriptor(_class3.prototype, 'show', [_dec], Object.getOwnPropertyDescriptor(_class3.prototype, 'show'), _class3.prototype), _applyDecoratedDescriptor(_class3.prototype, 'click', [_dec2], Object.getOwnPropertyDescriptor(_class3.prototype, 'click'), _class3.prototype)), _class3));
+
+
+    var ad = new AD();
+    ad.show();
+    ad.click();
 }
 
 /***/ })
