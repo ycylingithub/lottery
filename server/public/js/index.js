@@ -4000,18 +4000,11 @@ module.exports = __webpack_require__(126);
 
 __webpack_require__(127);
 
-__webpack_require__(330);
+var _lottery = __webpack_require__(330);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _lottery2 = _interopRequireDefault(_lottery);
 
-var Test = function Test() {
-    _classCallCheck(this, Test);
-
-    this.a = 'hello world!!!!';
-};
-
-var test = new Test();
-document.body.innerHTML = test.a;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
 /* 127 */
@@ -9607,51 +9600,41 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+__webpack_require__(331);
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+__webpack_require__(332);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+__webpack_require__(333);
 
-// export let A=123;
-//
-// export function test(){
-//   console.log('test');
-// }
-//
-// export class Hello{
-//   test(){
-//     console.log('class');
-//   }
-// }
-//模块化  模块引入import  模块导出export
-var A = 123;
-var test = function test() {
-    console.log('test');
-};
+__webpack_require__(334);
 
-var Hello = function () {
-    function Hello() {
-        _classCallCheck(this, Hello);
-    }
+/***/ }),
+/* 331 */
+/***/ (function(module, exports, __webpack_require__) {
 
-    _createClass(Hello, [{
-        key: 'test',
-        value: function test() {
-            console.log('class');
-        }
-    }]);
+"use strict";
 
-    return Hello;
-}();
 
-exports.default = {
-    A: A,
-    test: test,
-    Hello: Hello
-};
+/***/ }),
+/* 332 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+/* 333 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+/* 334 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 /***/ })
 /******/ ]);
