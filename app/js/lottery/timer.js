@@ -38,3 +38,6 @@ class Timer{
         }
     }
 }
+
+//一定要导出，不导出的话，别的地方无法导入，可以不加分号
+export default Timer
