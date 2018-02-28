@@ -42,6 +42,7 @@
     "yargs": "^11.0.0"
   },
   "devDependencies": {
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "mockjs": "^1.0.1-beta3"
   }
 }
