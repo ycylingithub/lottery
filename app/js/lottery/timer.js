@@ -4,7 +4,7 @@ class Timer{
         const now = new Date().getTime();
         const self = this;
         //如果时间为复则倒计时结束，不是的话就显示倒计时的时间
-        if(now-end){
+        if(now-end>0){
             handle.call(self);
         }else {
             let last_time=end-now;

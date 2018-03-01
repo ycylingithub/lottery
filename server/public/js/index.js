@@ -14000,6 +14000,9 @@ var _lottery2 = _interopRequireDefault(_lottery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var syy = new _lottery2.default();
+console.log(syy);
+
 /***/ }),
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -19565,7 +19568,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var copyProperties = function copyProperties(tatget, source) {
+var copyProperties = function copyProperties(target, source) {
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -19978,7 +19981,7 @@ var Base = function () {
             var active = $active ? $active.length : 0;
             var count = self.computeCount(active, self.cur_play);
             if (count) {
-                self.addCodeItem($active.join(''), self.cur_play, self.play_list.get(self.cur_play).name, count);
+                self.addCodeItem($active.join(' '), self.cur_play, self.play_list.get(self.cur_play).name, count);
             }
         }
 
@@ -20005,8 +20008,8 @@ var Base = function () {
         value: function getCount() {
             var self = this;
             var active = (0, _jquery2.default)('.boll-list .btn-boll-active').length;
-            var count = self.computeCount(active, self, cur_play);
-            var range = self.computeBonus(active, self, cur_play);
+            var count = self.computeCount(active, self.cur_play);
+            var range = self.computeBonus(active, self.cur_play);
             var money = count * 2;
             var win1 = range[0] - money;
             var win2 = range[1] - money;
@@ -20032,7 +20035,7 @@ var Base = function () {
         value: function getTotal() {
             var count = 0;
             (0, _jquery2.default)('.codelist li').each(function (index, item) {
-                count += (0, _jquery2.default)(item).attr(count) * 1;
+                count += (0, _jquery2.default)(item).attr('count') * 1;
             });
             (0, _jquery2.default)('#count').text(count);
             (0, _jquery2.default)('#money').text(count * 2);
@@ -20109,7 +20112,7 @@ var Timer = function () {
             var now = new Date().getTime();
             var self = this;
             //如果时间为复则倒计时结束，不是的话就显示倒计时的时间
-            if (now - end) {
+            if (now - end > 0) {
                 handle.call(self);
             } else {
                 var last_time = end - now;
@@ -20186,7 +20189,7 @@ var Calculate = function () {
             var exist = this.play_list.has(play_name);
             var arr = new Array(active).fill('0');
             if (exist && play_name.at(0) === 'r') {
-                count = Calculate.combine(arr, play_name.split('')[1]);
+                count = Calculate.combine(arr, play_name.split('')[1]).length;
             }
             return count;
         }
@@ -20276,6 +20279,7 @@ var Calculate = function () {
                     }
                 }
             })(arr, size, []);
+            return allResult;
         }
     }]);
 

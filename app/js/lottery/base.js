@@ -168,7 +168,7 @@ class Base{
         let active = $active?$active.length:0;
         let count = self.computeCount(active,self.cur_play);
         if(count){
-            self.addCodeItem($active.join(''),self.cur_play,self.play_list.get(self.cur_play).name,count);
+            self.addCodeItem($active.join(' '),self.cur_play,self.play_list.get(self.cur_play).name,count);
         }
     }
 
@@ -197,8 +197,8 @@ class Base{
     getCount(){
         let self = this;
         let active = $('.boll-list .btn-boll-active').length;
-        let count = self.computeCount(active,self,cur_play);
-        let range = self.computeBonus(active,self,cur_play);
+        let count = self.computeCount(active,self.cur_play);
+        let range = self.computeBonus(active,self.cur_play);
         let money = count*2;
         let win1 = range[0]-money;
         let win2 = range[1]-money;
@@ -229,7 +229,7 @@ class Base{
     getTotal(){
         let count = 0;
         $('.codelist li').each(function (index,item) {
-            count+= $(item).attr(count)*1;
+            count+= $(item).attr('count')*1;
         })
         $('#count').text(count);
         $('#money').text(count*2);
