@@ -19616,7 +19616,7 @@ var mix = function mix() {
             var mixin = _step2.value;
 
             copyProperties(Mix, mixin);
-            copyProperties((Mix.prototype, mixin.prototype));
+            copyProperties(Mix.prototype, mixin.prototype);
         }
     } catch (err) {
         _didIteratorError2 = true;
@@ -19673,8 +19673,10 @@ var Lottery = function (_mix) {
     }
 
     /**
-     * updateState   状态更新
-     * */
+     * [updateState 状态更新]
+     * @return {[type]} [description]
+     */
+
 
     _createClass(Lottery, [{
         key: 'updateState',
@@ -19684,22 +19686,23 @@ var Lottery = function (_mix) {
                 self.issue = res.issue;
                 self.end_time = res.end_time;
                 self.state = res.state;
-                (0, _jquery2.default)(self.issue_el).text(res, issue);
-                self.cutdown(res.end_time, function (time) {
+                (0, _jquery2.default)(self.issue_el).text(res.issue);
+                self.countdown(res.end_time, function (time) {
                     (0, _jquery2.default)(self.countdown_el).html(time);
                 }, function () {
                     setTimeout(function () {
                         self.updateState();
                         self.getOmit(self.issue).then(function (res) {});
-                        self.getOpenCode(self.issue).then(function () {});
+                        self.getOpenCode(self.issue).then(function (res) {});
                     }, 500);
                 });
             });
         }
 
         /**
-         * initEvent   初始化时间
-         * */
+         * [initEvent 初始化事件]
+         * @return {[type]} [description]
+         */
 
     }, {
         key: 'initEvent',
@@ -19709,7 +19712,7 @@ var Lottery = function (_mix) {
             (0, _jquery2.default)('.boll-list').on('click', '.btn-boll', self.toggleCodeActive.bind(self));
             (0, _jquery2.default)('#confirm_sel_code').on('click', self.addCode.bind(self));
             (0, _jquery2.default)('.dxjo').on('click', 'li', self.assistHandle.bind(self));
-            (0, _jquery2.default)('.qkmethod').on('click', '.btn-middle', self.getRandom.bind(self));
+            (0, _jquery2.default)('.qkmethod').on('click', '.btn-middle', self.getRandomCode.bind(self));
         }
     }]);
 
@@ -19757,35 +19760,29 @@ var Base = function () {
         value: function initPlayList() {
             this.play_list.set('r2', {
                 bonus: 6,
-                tip: '从01-11中任选2个或多个号码，所选号码与开奖号码任意两个号码相同，即中奖<em class="red">6</em>元',
+                tip: '从01～11中任选2个或多个号码，所选号码与开奖号码任意两个号码相同，即中奖<em class="red">6</em>元',
                 name: '任二'
-            });
-            set('r3', {
+            }).set('r3', {
                 bonus: 19,
                 tip: '从01-11中任选3个或多个号码，所选号码与开奖号码任意三个号码相同，即中奖<em class="red">19</em>元',
                 name: '任三'
-            });
-            set('r4', {
+            }).set('r4', {
                 bonus: 78,
                 tip: '从01-11中任选4个或多个号码，所选号码与开奖号码任意四个号码相同，即中奖<em class="red">78</em>元',
                 name: '任四'
-            });
-            set('r5', {
+            }).set('r5', {
                 bonus: 540,
                 tip: '从01-11中任选5个或多个号码，所选号码与开奖号码任意五个号码相同，即中奖<em class="red">540</em>元',
                 name: '任五'
-            });
-            set('r6', {
+            }).set('r6', {
                 bonus: 90,
                 tip: '从01-11中任选6个或多个号码，所选号码与开奖号码任意六个号码相同，即中奖<em class="red">90</em>元',
                 name: '任六'
-            });
-            set('r7', {
+            }).set('r7', {
                 bonus: 26,
                 tip: '从01-11中任选7个或多个号码，所选号码与开奖号码任意七个号码相同，即中奖<em class="red">26</em>元',
                 name: '任七'
-            });
-            set('r8', {
+            }).set('r8', {
                 bonus: 9,
                 tip: '从01-11中任选8个或多个号码，所选号码与开奖号码任意八个号码相同，即中奖<em class="red">9</em>元',
                 name: '任八'
@@ -19803,9 +19800,8 @@ var Base = function () {
                 this.number.add(('' + 1).padStart(2, '0'));
             }
         }
-
         /**
-         * initNumber   设置遗漏数据
+         * setOmit   设置遗漏数据
          * */
 
     }, {
@@ -19853,7 +19849,7 @@ var Base = function () {
 
     }, {
         key: 'setOpenCode',
-        value: function setOpenCode() {
+        value: function setOpenCode(code) {
             var self = this;
             self.open_code.clear();
             var _iteratorNormalCompletion2 = true;
